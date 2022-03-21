@@ -1,0 +1,46 @@
+apiVersion: v1
+data:
+  base-url: https://g.codefresh.io
+  runtime: |
+    apiVersion: codefresh.io/v1alpha1
+    kind: Runtime
+    metadata:
+      creationTimestamp: null
+      name: codefresh-round3
+      namespace: codefresh-round3
+    spec:
+      bootstrapSpecifier: github.com/codefresh-io/cli-v2/manifests/argo-cd
+      cluster: https://05AA616D8E4F41374BA07D0403548BF0.gr7.us-west-2.eks.amazonaws.com
+      components:
+      - isInternal: false
+        name: events
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-events?ref=v0.0.288
+        wait: true
+      - isInternal: false
+        name: rollouts
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-rollouts?ref=v0.0.288
+        wait: false
+      - isInternal: false
+        name: workflows
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/argo-workflows?ref=v0.0.288
+        wait: false
+      - isInternal: false
+        name: app-proxy
+        type: kustomize
+        url: github.com/codefresh-io/cli-v2/manifests/app-proxy?ref=v0.0.288
+        wait: false
+      defVersion: 1.0.1
+      ingressHost: https://codefresh-csdp-poc-bolt.net
+      repo: https://github.com/Jukie/test-csdp.git
+      version: 0.0.288
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    app.kubernetes.io/managed-by: codefresh
+    codefresh.io/entity: runtimeDef
+  name: codefresh-cm
+  namespace: codefresh-round3
